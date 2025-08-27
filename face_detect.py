@@ -25,7 +25,7 @@ def face_detect(imgs, save_dir=None):
     face2 = mtcnn(imgs[1]) 
 
     if(face1 is None or face2 is None):
-        print("Could not detect faces !")
+        raise RuntimeError("Could not detect faces !")
 
     if face1.dtype != torch.uint8:
         face1 = face1.clamp(0, 255).byte()
@@ -40,6 +40,7 @@ def face_detect(imgs, save_dir=None):
     faces.append(face_img2)   
 
     if save_dir is not None:
+        os.makedirs(save_dir, exist_ok=True) 
         for name in ("face1.png", "face2.png"):
             path = os.path.join(save_dir, name)
             if os.path.isfile(path):
