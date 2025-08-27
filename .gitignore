@@ -22,6 +22,7 @@ test.py
 *.docx
 *.pdf
 tempCodeRunnerFile.py
-models/resnet50_age.pth
 training_notebooks/cyshield_face.ipynb
-models/
+models/resnet50_age.pth
+models/resnet50_age_best.pth
+models/vggface2_recognition.pt
