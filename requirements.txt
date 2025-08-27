@@ -1,0 +1,5 @@
+Pillow==10.2.0
+facenet_pytorch==2.6.0
+numpy==1.26.4
+torch==2.5.1+cu121
+torchvision==0.20.1+cu121
