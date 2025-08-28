@@ -67,16 +67,13 @@ flowchart LR
     C --> E1["FaceNet (InceptionResnetV1)"]
     C2 --> E2["FaceNet (InceptionResnetV1)"]
 
-    E1 --> F1[L2 Normalize]
-    E2 --> F2[L2 Normalize]
-
-    F1 --> G[Cosine Similarity]
-    F2 --> G
+    E1 --> F[Cosine Similarity]
+    E2 --> F
 
     D1 --> H[Report ages]
     D2 --> H
 
-    G --> I{"sim ≥ τ ?"}
+    F --> I{"sim ≥ τ ?"}
     I --> |Yes| J[MATCH]
     I --> |No| K[NOT MATCH]
 ```
