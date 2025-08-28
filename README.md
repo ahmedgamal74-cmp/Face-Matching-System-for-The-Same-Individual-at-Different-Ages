@@ -19,16 +19,16 @@ It detects faces (MTCNN), predicts each face’s age (custom ResNet-50 trained o
   - [Prerequisites](#prerequisites)
   - [Clone with Git LFS](#clone-with-git-lfs)
   - [Create Environment & Install](#create-environment--install)
-  - [CPU-only vs CUDA](#cpuonly-vs-cuda)
+  <!-- - [CPU-only vs CUDA](#cpuonly-vs-cuda) -->
 - [Quickstart](#quickstart)
 - [Configuration](#configuration)
-- [Reproducing Results](#reproducing-results)
+<!-- - [Reproducing Results](#reproducing-results)
   - [A) Age Prediction (UTKFace)](#a-age-prediction-utkface)
-  - [B) Face Verification Across Age Gaps](#b-face-verification-across-age-gaps)
+  - [B) Face Verification Across Age Gaps](#b-face-verification-across-age-gaps) -->
 - [Troubleshooting](#troubleshooting)
-- [Roadmap](#roadmap)
+<!-- - [Roadmap](#roadmap) -->
 - [Acknowledgements](#acknowledgements)
-- [License](#license)
+<!-- - [License](#license) -->
 
 ---
 
