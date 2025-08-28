@@ -55,17 +55,18 @@ Decision: MATCH
 
 ```mermaid
 flowchart LR
+flowchart LR
     A[Image 1] --> B[MTCNN Detector]
     A2[Image 2] --> B2[MTCNN Detector]
 
     B --> C[Crop 1]
     B2 --> C2[Crop 2]
 
-    C --> D1[Age Model (ResNet-50)]
-    C2 --> D2[Age Model (ResNet-50)]
+    C --> D1["Age Model (ResNet-50)"]
+    C2 --> D2["Age Model (ResNet-50)"]
 
-    C --> E1[FaceNet (InceptionResnetV1)]
-    C2 --> E2[FaceNet (InceptionResnetV1)]
+    C --> E1["FaceNet (InceptionResnetV1)"]
+    C2 --> E2["FaceNet (InceptionResnetV1)"]
 
     E1 --> F1[L2 Normalize]
     E2 --> F2[L2 Normalize]
@@ -76,7 +77,7 @@ flowchart LR
     D1 --> H[Report ages]
     D2 --> H
 
-    G --> I{sim ≥ τ ?}
+    G --> I{"sim ≥ τ ?"}
     I --> |Yes| J[MATCH]
     I --> |No| K[NOT MATCH]
 ```
