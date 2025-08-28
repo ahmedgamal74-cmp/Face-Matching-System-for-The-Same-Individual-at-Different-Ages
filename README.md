@@ -58,8 +58,8 @@ flowchart LR
     A[Image 1] --> B[MTCNN Detector]
     A2[Image 2] --> B2[MTCNN Detector]
 
-    B --> C[Crop 1]
-    B2 --> C2[Crop 2]
+    B --> C[Face1 1]
+    B2 --> C2[Face 2]
 
     C --> D1["Age Model (ResNet-50)"]
     C2 --> D2["Age Model (ResNet-50)"]
