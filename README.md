@@ -55,7 +55,6 @@ Decision: MATCH
 
 ```mermaid
 flowchart LR
-flowchart LR
     A[Image 1] --> B[MTCNN Detector]
     A2[Image 2] --> B2[MTCNN Detector]
 
