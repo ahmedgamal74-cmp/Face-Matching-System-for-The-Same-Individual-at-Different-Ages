@@ -75,6 +75,7 @@ flowchart LR
 
     D1 --> H[Report ages]
     D2 --> H
+
     G --> I{sim ≥ τ ?}
     I --> |Yes| J[MATCH]
     I --> |No| K[NOT MATCH]
