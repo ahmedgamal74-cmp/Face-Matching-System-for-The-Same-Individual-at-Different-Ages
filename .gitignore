@@ -24,3 +24,4 @@ test.py
 tempCodeRunnerFile.py
 training_notebooks/cyshield_face.ipynb
 models/resnet50_age_best.pth
+models/

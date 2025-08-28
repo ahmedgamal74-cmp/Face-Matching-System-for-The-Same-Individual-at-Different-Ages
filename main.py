@@ -11,7 +11,7 @@ image_dir = input_dir
 save_dir = output_dir
 images = []
 img_count=0
-sim_threshold=threshold
+sim_threshold=similarity_threshold
 
 print("Device:", device, "\n")
 

@@ -7,17 +7,17 @@ import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 device = device
+model_path = face_matching_model_path
 
 # pretrained VGGFace2 for 512d embeddings
-# model = InceptionResnetV1(pretrained='vggface2').eval().to(device)
 model = InceptionResnetV1(num_classes=8631).eval().to(device)
-state_dict = torch.load('models/vggface2_recognition.pt')
+state_dict = torch.load(model_path)
 if 'logits.weight' in state_dict:
     state_dict.pop('logits.weight')
 if 'logits.bias' in state_dict:
     state_dict.pop('logits.bias')
 model.load_state_dict(state_dict, strict=False)
-
+# model = InceptionResnetV1(pretrained='vggface2').eval().to(device)
 
 # preprocess for FaceNet (160x160 and map [0,1] -> [-1,1]
 preprocess = transforms.Compose([
