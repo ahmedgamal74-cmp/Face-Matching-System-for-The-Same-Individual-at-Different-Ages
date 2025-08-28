@@ -5,7 +5,7 @@ It detects faces (MTCNN), predicts each face’s age (custom ResNet-50 trained o
 
 > **Highlights**
 > - End-to-end: detect → age-predict → embed → cosine-match  
-> - Pretrained detection & embedding, custom age regressor  
+> - From scratch trained age predictor, pretrained detection & embedding
 > - Simple to run locally (CPU or GPU), models stored with **Git LFS**
 
 ---
@@ -37,15 +37,15 @@ It detects faces (MTCNN), predicts each face’s age (custom ResNet-50 trained o
 This project evaluates whether two images depict the **same identity** despite age differences.
 
 - **Face Detection:** MTCNN (via `facenet-pytorch`)  
-- **Age Prediction:** custom **ResNet-50** regressor trained on **UTKFace**  
+- **Age Prediction:** custom **ResNet-50** regressor trained from scratch on **UTKFace**  
 - **Face Embedding:** **InceptionResnetV1** (FaceNet family) pretrained on **VGGFace2**  
 - **Decision:** cosine similarity on L2-normalized embeddings with a configurable threshold
 
 Typical console output:
 ```
-Age 1: 24.3 years
-Age 2: 35.9 years
-Similarity: 67.85%
+Age 1: 14.91 years
+Age 2: 19.78 years
+Similarity: 65.51%
 Decision: MATCH
 ```
 
@@ -89,11 +89,12 @@ flowchart LR
 ├── models/                   # model weights (Git LFS)
 │   ├── resnet50_age.pth
 │   └── vggface2_recognition.pt
-├── training_notebooks/       # e.g., age_pred.ipynb for UTKFace training
+├── training_notebooks/       # age_pred.ipynb for UTKFace training
+│   └── age_pred.ipynb
 ├── age_pred.py               # age prediction (ResNet-50) inference
 ├── face_detect.py            # MTCNN wrapper
 ├── face_match.py             # FaceNet embeddings + cosine similarity
-├── myResNet.py               # ResNet-50 architecture (age regression head)
+├── myResNet.py               # Implementation of ResNet-50 architecture (age regression head)
 ├── config.py                 # device, paths, similarity threshold
 ├── main.py                   # end-to-end pipeline entry point
 └── requirements.txt
@@ -105,9 +106,8 @@ flowchart LR
 
 ### Prerequisites
 
-- **Python** ≥ 3.9 (3.10 recommended)  
+- **Python** ≥ 3.9 (3.12 recommended)  
 - **Git LFS** (needed to pull model files)  
-- Optional: **NVIDIA CUDA** if you plan to run on GPU
 
 ### Clone with Git LFS
 
@@ -129,32 +129,15 @@ git lfs pull
 
 ```bash
 # (Recommended) create and activate a clean env
-python -m venv .venv
-# Windows: .venv\Scripts\activate
-# Linux/Mac:
-source .venv/bin/activate
+conda create -n cyshield_2 python=3.12 -y 
+conda activate cyshield_2
 
 # Install Python deps
-pip install --upgrade pip
+python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### CPU-only vs CUDA
-
-The repo’s `requirements.txt` pins PyTorch + CUDA **cu121** wheels. If your machine doesn’t have CUDA 12.1:
-
-- **Option A (keep GPU if compatible):** install the matching CUDA toolkit/driver for cu121.
-- **Option B (CPU-only):** install CPU wheels and then install the rest:
-
-```bash
-# Example CPU-only install (adjust for your OS/python)
-pip install --index-url https://download.pytorch.org/whl/cpu torch torchvision
-
-# Then install the rest (facenet-pytorch, pillow, etc.)
-pip install -r requirements.txt --no-deps
-```
-
-> If you already have a working PyTorch, you can edit `requirements.txt` to remove the pinned cu121 wheels and use your local version.
+The repo’s `requirements.txt` pins PyTorch CPU-only for fast reproducing
 
 ---
 
@@ -180,13 +163,13 @@ Key settings live in `config.py`:
 - `save_dir`: default `1_face_detected`  
 - `age_pred_model_path`: `models/resnet50_age.pth`  
 - `face_embed_model_path`: `models/vggface2_recognition.pt`  
-- `threshold`: **0.50** (cosine-sim decision boundary)
+- `threshold`: **0.50** (cosine-sim decision dafault boundary)
 
-> Tune `threshold` after you compute ROC on a validation split (see **Reproducing Results**). A stricter threshold reduces false matches, a looser threshold raises recall.
+<!-- > Tune `threshold` after you compute ROC on a validation split (see **Reproducing Results**). A stricter threshold reduces false matches, a looser threshold raises recall. -->
 
 ---
 
-## Reproducing Results
+<!-- ## Reproducing Results
 
 ### A) Age Prediction (UTKFace)
 
@@ -252,7 +235,7 @@ print("TPR@1%FPR:", tpr_at_1p)
 
 > After choosing your operating threshold `τ`, update `config.py` → `threshold = τ` and note it in your README/results.
 
----
+--- -->
 
 ## Troubleshooting
 
@@ -263,7 +246,7 @@ print("TPR@1%FPR:", tpr_at_1p)
   git lfs pull
   ```
 - **CUDA errors / version mismatch**  
-  The default wheels target **cu121**. Either install CUDA 12.1 or switch to CPU wheels (see Setup).
+  The default wheels target **cpu**. Either install CUDA 12.1 or stay CPU wheels (see Setup).
 - **`facenet_pytorch` not found**  
   Re-run: `pip install -r requirements.txt`
 - **No face detected**  
@@ -273,7 +256,7 @@ print("TPR@1%FPR:", tpr_at_1p)
 
 ---
 
-## Roadmap
+<!-- ## Roadmap
 
 - Threshold calibration tool (auto-sweep and plots)  
 - Optional multi-face selection (`keep_all=True` + heuristic)  
@@ -281,7 +264,7 @@ print("TPR@1%FPR:", tpr_at_1p)
 - Domain calibration (CCTV/IR) and image-quality gating  
 - Fairness slice metrics by age bands and demographics
 
----
+--- -->
 
 ## Acknowledgements
 
@@ -291,6 +274,6 @@ print("TPR@1%FPR:", tpr_at_1p)
 
 ---
 
-## License
+<!-- ## License
 
-Specify your chosen license (e.g., MIT) in a `LICENSE` file. Until then, all rights reserved by default.
+Specify your chosen license (e.g., MIT) in a `LICENSE` file. Until then, all rights reserved by default. -->
