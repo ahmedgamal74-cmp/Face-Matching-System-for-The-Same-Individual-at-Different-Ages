@@ -16,7 +16,7 @@ sim_threshold=similarity_threshold
 print("Device:", device, "\n")
 
 for filename in os.listdir(image_dir):
-    if filename.endswith(('.jpg', '.png', '.jpeg')):
+    if filename.endswith(('.jpg', '.png', '.jpeg', 'webp')):
         img_count+=1
         if(img_count>2):
             print("\nYou uploaded more than two images!")
