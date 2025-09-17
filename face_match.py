@@ -26,17 +26,26 @@ preprocess = transforms.Compose([
     transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])  # [-1,1] (prewhiten)
 ])
 
+"""
+function to generate and normalize the embedding of face
+"""
 @torch.inference_mode()
 def embed_face(img):
     # img = Image.open(path).convert('RGB')
     x = preprocess(img).unsqueeze(0).to(device) # [1,3,160,160]
     emb = model(x) # [1,512]
     emb = torch.nn.functional.normalize(emb, p=2, dim=1)  # L2-normalize
-    return emb.squeeze(0).cpu().numpy()
+    return emb.squeeze(0).cpu().numpy() # return 512d vector
 
+"""
+function to calculate the cos similarity between two normalized vectors
+"""
 def cos_similarity(a, b):
     return float(np.dot(a, b))  
 
+"""
+function to embed and retunrn similarity between two faces
+"""
 def check_similarity(imgs):
     e1, e2 = embed_face(imgs[0]), embed_face(imgs[1])
     cos_sim = cos_similarity(e1, e2)

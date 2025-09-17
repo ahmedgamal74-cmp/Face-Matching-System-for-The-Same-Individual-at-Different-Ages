@@ -11,6 +11,7 @@ device=device
 # device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # print(device)
 
+# ’MTCNN face detection model loading
 mtcnn = MTCNN(
     image_size=image_size,
     margin=40,                
@@ -20,6 +21,7 @@ mtcnn = MTCNN(
     device=device,
 )
 
+# function that detects face of two different images
 def face_detect(imgs, save_dir=None):
     face1 = mtcnn(imgs[0])            
     face2 = mtcnn(imgs[1]) 
@@ -27,18 +29,20 @@ def face_detect(imgs, save_dir=None):
     if(face1 is None or face2 is None):
         raise RuntimeError("Could not detect faces !")
 
+    # ensure detected faces are 0:255 
     if face1.dtype != torch.uint8:
         face1 = face1.clamp(0, 255).byte()
     if face2.dtype != torch.uint8:
         face2 = face2.clamp(0, 255).byte()
 
+    # Convert to RGB images
+    faces = []
     face_img1 = Image.fromarray(face1.permute(1, 2, 0).cpu().numpy(), mode="RGB")
     face_img2 = Image.fromarray(face2.permute(1, 2, 0).cpu().numpy(), mode="RGB")
-
-    faces = []
     faces.append(face_img1)   
     faces.append(face_img2)   
 
+    # save faces
     if save_dir is not None:
         os.makedirs(save_dir, exist_ok=True) 
         for name in ("face1.png", "face2.png"):
@@ -47,7 +51,7 @@ def face_detect(imgs, save_dir=None):
                 os.remove(path)
         faces[0].save(f"{save_dir}/face1.png")   
         faces[1].save(f"{save_dir}/face2.png")
-        print(f"\nCropped Faces were saved at {save_dir}")
+        print(f"\nCropped Faces saved at {save_dir}")
 
     return faces     
 
